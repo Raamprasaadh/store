@@ -1,11 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import { displayAvailableItems } from '../actions';
+import { displayAvailableItems, addProductToCart } from '../actions';
 import Product from './product';
 
 class Products extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            Item:[],
+        }
     }
     componentDidMount() {
         var InitializeValues =()=>{ this.props.DisplayItems()};
@@ -21,13 +24,14 @@ class Products extends React.Component {
                 (this.props.AvailableItems !== undefined)?
                     <div>{
                         this.props.AvailableItems.map((Item,Index)=>(
-                        <div key ={Index}>
-                        <h3>Name:{Item.Name}</h3>
-                        <h4>Price:{Item.Price}</h4>
-                        </div>
-                        // <div index={Index}>
-                        // {/* <Product Name={Item.Name} Price ={Item.Price}/> */}
+                        // <div key ={Index}>
+                        // <h3>Name:{Item.Name}</h3>
+                        // <h4>Price:{Item.Price}</h4>
                         // </div>
+                        <div key={Index}>
+                        <Product Name={Item.Name} Price ={Item.Price}/>
+                        <button onClick ={()=>{ this.props.AddToCart(Item)}}>Add to cart</button>
+                        </div>
                     ))}</div>
                 :"No Item available"
             }
@@ -41,7 +45,8 @@ const mapStateToProps=(state)=>({
 });
 const mapDispatchToProps=(dispatch)=>{
     return{
-        DisplayItems:dispatch=>(displayAvailableItems())
+        DisplayItems:dispatch=>(displayAvailableItems()),
+        AddToCart:Item => dispatch(addProductToCart(Item))
     };
 }
 

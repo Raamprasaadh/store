@@ -24,6 +24,12 @@ export const decrementProductInCart=(Item)=>{
         payload:Item
     }
 }
+export const removeProductFromCart=(Item)=>{
+    return{
+        type:'DECREMENT_PRODUCT_IN_CART',
+        payload:Item
+    }
+}
 export const clearCart =()=>{
     return {
         type:'ClearCart'
